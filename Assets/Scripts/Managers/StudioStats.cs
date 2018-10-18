@@ -6,7 +6,7 @@ public class StudioStats : MonoBehaviour
 {
     [SerializeField] private int _currentStudioGi; // The current amount of GI the player possesses
     [SerializeField] private float _studioPopularity; // A value that will determine how popular the studio is
-    public List<TeamMember> TeamMembers;
+    [HideInInspector] public List<TeamMember> TeamMembers;
     private Dictionary<TeamMember.Department, List<TeamMember>> _divisions;
 
     private void Start()

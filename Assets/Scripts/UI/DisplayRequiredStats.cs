@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DisplayRequiredStats : MonoBehaviour
 {
@@ -17,8 +18,8 @@ public class DisplayRequiredStats : MonoBehaviour
 
         var giCostContainer = Instantiate(_containerPrefab, transform);
         giCostContainer.RequirementToDisplay("GI");
-        giCostContainer.RequiredValueToDisplay(requirements.GiCost.ToString());
-        giCostContainer.CurrentValueToDisplay(FindObjectOfType<StudioStats>().GetStudioGi().ToString());
+        giCostContainer.RequiredValueToDisplay(string.Format("{0:n0}", requirements.GiCost));
+        giCostContainer.CurrentValueToDisplay(string.Format("{0:n0}", FindObjectOfType<StudioStats>().GetStudioGi()));
 
         var timeContainer = Instantiate(_containerSansCurrent, transform);
         timeContainer.RequirementToDisplay("Time");
@@ -27,10 +28,11 @@ public class DisplayRequiredStats : MonoBehaviour
         foreach (var member in requirements.RequiredMembers)
         {
             var container = Instantiate(_containerPrefab, transform);
+            var studioStats = FindObjectOfType<StudioStats>();
             container.RequirementToDisplay(GetDepartmentName(member.GetRequiredDepartment()));
             container.RequiredValueToDisplay("X " + member.GetNumberOfRequiredMembers());
             container.CurrentValueToDisplay(member
-                .GetNumberOfCurrentQualifiedMembers(FindObjectOfType<StudioStats>().GetCurrentTeamByDivision(member.GetRequiredDepartment())).ToString());
+                .GetNumberOfCurrentQualifiedMembers(studioStats.GetCurrentTeamByDivision(member.GetRequiredDepartment())).ToString());
         }
     }
 

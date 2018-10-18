@@ -5,15 +5,17 @@ using UnityEngine;
 public class StudioStatsEditor : Editor
 {
     private StudioStats _currentInstance;
+    private SerializedProperty _studioGi;
 
     private void OnEnable()
     {
+        _studioGi = serializedObject.FindProperty("_currentStudioGi");
         _currentInstance = serializedObject.targetObject as StudioStats;
     }
 
     public override void OnInspectorGUI()
     {
-        serializedObject.Update();
+        DrawDefaultInspector();
 
         if (_currentInstance.TeamMembers.Count > 0)
         {

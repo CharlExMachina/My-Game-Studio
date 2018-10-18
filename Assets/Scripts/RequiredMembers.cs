@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using UnityEngine;
-using Debug = UnityEngine.Debug;
 
 /// <summary>
 /// This class displays the required members for a specific project, and also checks
@@ -25,19 +20,24 @@ public class RequiredMembers
 
     public bool CheckIfStudioHasEnoughMembers(List<TeamMember> members)
     {
-        var qualifiedMembers = new List<TeamMember>(_requiredMembers.Capacity);
+        //var qualifiedMembers = new List<TeamMember>(_requiredMembers.Capacity);
 
-        for (var i = 0; i < qualifiedMembers.Capacity; i++)
-        {
-            if (members[i].GetRank(_department) >= _minRank)
-            {
-                qualifiedMembers.Add(members[i]);
-            }
-        }
+        //for (var i = 0; i < qualifiedMembers.Capacity; i++)
+        //{
+        //    if (members[i].GetRank(_department) >= _minRank)
+        //    {
+        //        qualifiedMembers.Add(members[i]);
+        //    }
+        //}
 
-        _requiredMembers = qualifiedMembers;
+        var numberOfRequiredMembers = _requiredMembers.Capacity;
+        var currentNumberOfQualifiedMembers = members.Count;
 
-        return qualifiedMembers.Count == qualifiedMembers.Capacity; // If there are enough members, it will return true
+        return currentNumberOfQualifiedMembers == numberOfRequiredMembers;
+
+        //_requiredMembers = qualifiedMembers;
+
+        //return qualifiedMembers.Count == qualifiedMembers.Capacity; // If there are enough members, it will return true
     }
 
     /// <summary>
