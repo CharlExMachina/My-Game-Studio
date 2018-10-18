@@ -32,8 +32,24 @@ public class ProjectGenerator : MonoBehaviour
         var newProject = new Project {Title = _database.GetRandomTitleFromDatabase()};
         newProject.Description = GenerateDescription(newProject.Title);
         newProject.Requirements.GiCost = GenerateProjectCost();
+        newProject.Requirements.TimeToDevelop = GenerateTimeToDevelop();
+        newProject.Requirements.RequiredMembers = GenerateRequiredMembers();
 
         return newProject;
+    }
+
+    private List<RequiredMembers> GenerateRequiredMembers()
+    {
+        var requiredProgrammers = new RequiredMembers(TeamMember.Department.Programming, 40, Random.Range(1, 4));
+        var requiredArtists = new RequiredMembers(TeamMember.Department.Art, 50, 2);
+
+        var finalList = new List<RequiredMembers> {requiredProgrammers, requiredArtists};
+        return finalList;
+    }
+
+    private int GenerateTimeToDevelop()
+    {
+        return Random.Range(1, 15 + 1);
     }
 
     private int GenerateProjectCost()

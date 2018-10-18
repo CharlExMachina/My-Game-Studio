@@ -1,4 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Security.Cryptography.X509Certificates;
+using UnityEngine;
+using Debug = UnityEngine.Debug;
 
 /// <summary>
 /// This class displays the required members for a specific project, and also checks
@@ -34,9 +40,26 @@ public class RequiredMembers
         return qualifiedMembers.Count == qualifiedMembers.Capacity; // If there are enough members, it will return true
     }
 
-    public int GetNumberOfCurrentQualifiedMembers()
+    /// <summary>
+    /// Checks a list of team members and return the quantity of qualified members (if any)
+    /// </summary>
+    /// <param name="currentStaff">A list containing team members to start checking if they are qualified</param>
+    /// <returns>Returns the number of qualified staff the player possesses</returns>
+    public int GetNumberOfCurrentQualifiedMembers(List<TeamMember> currentStaff)
     {
-        return _requiredMembers.Count;
+        var qualifiedMembers =
+            from m in currentStaff
+            where m.GetRank(_department) >= _minRank
+            select m;
+
+        var qualifiedMembersList = qualifiedMembers.ToList();
+
+        return qualifiedMembersList.Count;
+    }
+
+    public TeamMember.Department GetRequiredDepartment()
+    {
+        return _department;
     }
 
     public int GetNumberOfRequiredMembers()
